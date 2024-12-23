@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: warmachine
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_warmachine?currentSchema=public
+    driverClassName: org.postgresql.Driver
+    username: warmachine
+    password: warmachine
+  #  password: password
+  #datasource:
+  #  url: jdbc:h2:mem:testdb
+  #  driverClassName: org.h2.Driver
+  #  username: sa
+  #  password: password
+  #jpa:
+  #  database-platform: org.hibernate.dialect.H2Dialect
