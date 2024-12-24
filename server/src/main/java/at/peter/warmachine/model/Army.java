@@ -10,7 +10,7 @@ public class Army {
     private Integer experienceFactor;
     private Integer trainingFactor;
     private Integer equipmentFactor;
-    private Integer specialTroopFactor;
+    private Float specialTroopFactor;
     private Float mountedFactor;
     private Float missileFactor;
     private Float magicalFactor;
@@ -71,11 +71,11 @@ public class Army {
         this.equipmentFactor = equipmentFactor;
     }
 
-    public Integer getSpecialTroopFactor() {
+    public Float getSpecialTroopFactor() {
         return specialTroopFactor;
     }
 
-    public void setSpecialTroopFactor(Integer specialTroopFactor) {
+    public void setSpecialTroopFactor(Float specialTroopFactor) {
         this.specialTroopFactor = specialTroopFactor;
     }
 

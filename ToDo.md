@@ -1,0 +1,1 @@
+* Add Logic for attached heroes (leadership factor)
