@@ -14,6 +14,7 @@ const ArmyList = () => {
     if (isLoading) return "..."
     if (isError) return " Uahh!"
     if (data) return <>{data.map((army)=>{
+      //table here
         return <ArmyComponent army = {army}/>
     })}</>
 }
