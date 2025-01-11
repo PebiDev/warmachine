@@ -1,8 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import {
+  createLazyFileRoute,
+  Outlet,
+  useMatchRoute,
+  useNavigate,
+} from "@tanstack/react-router";
 import { IArmy } from "../types/dto";
 import ArmyComponent from "../components/armies/ArmyDisplay";
 import {
+  Button,
+  Modal,
   Paper,
   Table,
   TableBody,
@@ -11,6 +18,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { RouteOutletPaper } from "../components/armies/armies.styles";
 
 const loadArmies = async (): Promise<IArmy[]> => {
   const response = await fetch("/api/armies");
@@ -49,11 +57,32 @@ const ArmyList = () => {
     );
 };
 
+const RouteOutlet = () => {
+  const match = useMatchRoute();
+  const navigate = useNavigate();
+  const handleClose = () => {
+    navigate({ to: "/armies" });
+  };
+  return (
+    <Modal open={!match({ to: "/armies" })} onClose={handleClose}>
+      <RouteOutletPaper>
+        <Outlet />
+      </RouteOutletPaper>
+    </Modal>
+  );
+};
+
 const RouteComponent = () => {
+  const navigate = useNavigate();
+  const handleOnClick = () => {
+    navigate({ to: "/armies/create" });
+  };
   return (
     <div>
       <h3>List of all Armies</h3>
+      <Button onClick={handleOnClick}>Create New Army</Button>
       <ArmyList />
+      <RouteOutlet></RouteOutlet>
     </div>
   );
 };
