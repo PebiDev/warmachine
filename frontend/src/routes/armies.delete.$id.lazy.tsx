@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, DialogActions, DialogContent } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 
@@ -29,12 +29,12 @@ function RouteComponent() {
   });
   const handleDelete = () => mutate(id);
   return (
-    <div>
-      Delete Army ID "{id}"?
-      <div>
+    <>
+      <DialogContent>Delete Army ID "{id}"?</DialogContent>
+      <DialogActions>
         <Button onClick={handleClose}>No</Button>
         <Button onClick={handleDelete}>Yes</Button>
-      </div>
-    </div>
+      </DialogActions>
+    </>
   );
 }
