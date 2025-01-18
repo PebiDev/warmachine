@@ -1,15 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { IArmy } from "../../types/dto";
-import classes from "./armyDisplay.module.css";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  TableCell,
-  TableRow,
-} from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button, TableCell, TableRow } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 
 const calculateLeaderFactor = ({ leader }: IArmy) => {
