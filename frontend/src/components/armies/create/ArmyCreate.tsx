@@ -1,18 +1,6 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-} from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArmyForms, ArmyFormType } from "../ArmyForm";
+import { ArmyForms } from "../ArmyForm";
 import { IArmy } from "../../../types/dto";
 
 const createArmy = async (army: IArmy) => {

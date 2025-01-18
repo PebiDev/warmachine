@@ -20,6 +20,7 @@ const ArmiesLazyImport = createFileRoute('/armies')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 const ArmiesCreateLazyImport = createFileRoute('/armies/create')()
+const ArmiesUpdateIdLazyImport = createFileRoute('/armies/update/$id')()
 const ArmiesDeleteIdLazyImport = createFileRoute('/armies/delete/$id')()
 
 // Create/Update Routes
@@ -47,6 +48,14 @@ const ArmiesCreateLazyRoute = ArmiesCreateLazyImport.update({
   path: '/create',
   getParentRoute: () => ArmiesLazyRoute,
 } as any).lazy(() => import('./routes/armies.create.lazy').then((d) => d.Route))
+
+const ArmiesUpdateIdLazyRoute = ArmiesUpdateIdLazyImport.update({
+  id: '/update/$id',
+  path: '/update/$id',
+  getParentRoute: () => ArmiesLazyRoute,
+} as any).lazy(() =>
+  import('./routes/armies.update.$id.lazy').then((d) => d.Route),
+)
 
 const ArmiesDeleteIdLazyRoute = ArmiesDeleteIdLazyImport.update({
   id: '/delete/$id',
@@ -95,6 +104,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArmiesDeleteIdLazyImport
       parentRoute: typeof ArmiesLazyImport
     }
+    '/armies/update/$id': {
+      id: '/armies/update/$id'
+      path: '/update/$id'
+      fullPath: '/armies/update/$id'
+      preLoaderRoute: typeof ArmiesUpdateIdLazyImport
+      parentRoute: typeof ArmiesLazyImport
+    }
   }
 }
 
@@ -103,11 +119,13 @@ declare module '@tanstack/react-router' {
 interface ArmiesLazyRouteChildren {
   ArmiesCreateLazyRoute: typeof ArmiesCreateLazyRoute
   ArmiesDeleteIdLazyRoute: typeof ArmiesDeleteIdLazyRoute
+  ArmiesUpdateIdLazyRoute: typeof ArmiesUpdateIdLazyRoute
 }
 
 const ArmiesLazyRouteChildren: ArmiesLazyRouteChildren = {
   ArmiesCreateLazyRoute: ArmiesCreateLazyRoute,
   ArmiesDeleteIdLazyRoute: ArmiesDeleteIdLazyRoute,
+  ArmiesUpdateIdLazyRoute: ArmiesUpdateIdLazyRoute,
 }
 
 const ArmiesLazyRouteWithChildren = ArmiesLazyRoute._addFileChildren(
@@ -120,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/armies': typeof ArmiesLazyRouteWithChildren
   '/armies/create': typeof ArmiesCreateLazyRoute
   '/armies/delete/$id': typeof ArmiesDeleteIdLazyRoute
+  '/armies/update/$id': typeof ArmiesUpdateIdLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -128,6 +147,7 @@ export interface FileRoutesByTo {
   '/armies': typeof ArmiesLazyRouteWithChildren
   '/armies/create': typeof ArmiesCreateLazyRoute
   '/armies/delete/$id': typeof ArmiesDeleteIdLazyRoute
+  '/armies/update/$id': typeof ArmiesUpdateIdLazyRoute
 }
 
 export interface FileRoutesById {
@@ -137,6 +157,7 @@ export interface FileRoutesById {
   '/armies': typeof ArmiesLazyRouteWithChildren
   '/armies/create': typeof ArmiesCreateLazyRoute
   '/armies/delete/$id': typeof ArmiesDeleteIdLazyRoute
+  '/armies/update/$id': typeof ArmiesUpdateIdLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -147,8 +168,15 @@ export interface FileRouteTypes {
     | '/armies'
     | '/armies/create'
     | '/armies/delete/$id'
+    | '/armies/update/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/armies' | '/armies/create' | '/armies/delete/$id'
+  to:
+    | '/'
+    | '/about'
+    | '/armies'
+    | '/armies/create'
+    | '/armies/delete/$id'
+    | '/armies/update/$id'
   id:
     | '__root__'
     | '/'
@@ -156,6 +184,7 @@ export interface FileRouteTypes {
     | '/armies'
     | '/armies/create'
     | '/armies/delete/$id'
+    | '/armies/update/$id'
   fileRoutesById: FileRoutesById
 }
 
@@ -196,7 +225,8 @@ export const routeTree = rootRoute
       "filePath": "armies.lazy.tsx",
       "children": [
         "/armies/create",
-        "/armies/delete/$id"
+        "/armies/delete/$id",
+        "/armies/update/$id"
       ]
     },
     "/armies/create": {
@@ -205,6 +235,10 @@ export const routeTree = rootRoute
     },
     "/armies/delete/$id": {
       "filePath": "armies.delete.$id.lazy.tsx",
+      "parent": "/armies"
+    },
+    "/armies/update/$id": {
+      "filePath": "armies.update.$id.lazy.tsx",
       "parent": "/armies"
     }
   }

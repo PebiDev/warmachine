@@ -56,12 +56,16 @@ const ArmyComponent = ({ army }: ArmyComponentProps) => {
 
   // delete navigation
   const navigate = useNavigate();
-  const handleDelete = () => {
+  const handleDelete = (event: React.MouseEvent) => {
+    event.stopPropagation();
     navigate({ to: "/armies/delete/$id", params: { id: `${army.id}` } });
+  };
+  const handleUpdate = () => {
+    navigate({ to: "/armies/update/$id", params: { id: `${army.id}` } });
   };
 
   return (
-    <TableRow hover>
+    <TableRow hover onClick={handleUpdate}>
       <TableCell>{army.id}</TableCell>
       <TableCell align="right">{army.name}</TableCell>
       <TableCell align="right">{battleRating}</TableCell>
