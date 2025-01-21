@@ -1,6 +1,5 @@
 import { CssBaseline } from "@mui/material";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 const RootComponent = () => (
   <>

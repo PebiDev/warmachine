@@ -9,7 +9,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { IArmy } from "../../types/dto";
 
 export interface ArmyFormType {
@@ -36,8 +36,7 @@ export const ArmyForms = ({ existingArmy, onSubmit }: ArmyFormsProps) => {
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { isValid, errors, validatingFields },
+    formState: { isValid, errors },
   } = useForm<IArmy>({
     mode: "all",
     values: existingArmy,
