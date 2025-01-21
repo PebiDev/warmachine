@@ -13,6 +13,9 @@ const RootComponent = () => (
       </Link>{" "}
       <Link to="/armies" className="[&.active]:font-bold">
         Armies
+      </Link>{" "}
+      <Link to="/leaders" className="[&.active]:font-bold">
+        Leaders
       </Link>
     </div>
     <hr />

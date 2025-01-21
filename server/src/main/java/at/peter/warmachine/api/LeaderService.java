@@ -37,7 +37,7 @@ public class LeaderService {
         return leaderRepo.save(leader);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{leaderId}")
     public void deleteLeader(@PathVariable("leaderId") Long leaderId) throws LeaderMissingException {
         Leader leader = leaderRepo.findById(leaderId).orElseThrow(() -> new LeaderMissingException(leaderId));
         leaderRepo.delete(leader);
