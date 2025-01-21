@@ -11,7 +11,7 @@ public class Leader {
     private Integer intAdjustment;
     private Integer wisAdjustment;
     private Integer chaAdjustment;
-    private Integer leaderLevel;
+    private Float leaderLevel;
 
 
     @Id
@@ -56,11 +56,11 @@ public class Leader {
         this.chaAdjustment = chaAdjustment;
     }
 
-    public Integer getLeaderLevel() {
+    public Float getLeaderLevel() {
         return leaderLevel;
     }
 
-    public void setLeaderLevel(Integer leaderLevel) {
+    public void setLeaderLevel(Float leaderLevel) {
         this.leaderLevel = leaderLevel;
     }
 }

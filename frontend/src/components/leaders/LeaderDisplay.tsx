@@ -11,7 +11,7 @@ const calculateLeaderFactor = (leader: ILeader) => {
     leader.chaAdjustment +
     leader.leaderLevel;
 
-  return result;
+  return Math.round(result);
 };
 
 interface LeaderComponentProps {
@@ -38,7 +38,7 @@ const LeaderComponent = ({ leader }: LeaderComponentProps) => {
       <TableCell align="right">{leader.intAdjustment}</TableCell>
       <TableCell align="right">{leader.wisAdjustment}</TableCell>
       <TableCell align="right">{leader.chaAdjustment}</TableCell>
-      <TableCell align="right">{leader.leaderLevel}</TableCell>
+      <TableCell align="right">{Math.floor(leader.leaderLevel)}</TableCell>
       <TableCell align="right">
         <Button variant="text" onClick={handleDelete}>
           Delete
