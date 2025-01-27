@@ -9,23 +9,25 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  useController,
+  UseControllerReturn,
+  useForm,
+} from "react-hook-form";
 import { IArmy } from "../../types/dto";
 
-export interface ArmyFormType {
-  name: string;
-  expFactor: string;
-  trainFactor: string;
-  eqpFactor: string;
-  stFactor: string;
-  mntFactor: string;
-  misFactor: string;
-  magFactor: string;
-  spellFactor: string;
-  flyFactor: string;
-  speedFactor: boolean;
-  description?: string;
-}
+const toFieldProps = <T extends FieldValues>({
+  field: { value, onChange, onBlur, name, ref, disabled },
+}: UseControllerReturn<T, Path<T>>) => ({
+  value,
+  onChange,
+  onBlur,
+  name,
+  inputRef: ref,
+  disabled,
+});
 
 interface ArmyFormsProps {
   existingArmy?: IArmy;
@@ -36,11 +38,20 @@ export const ArmyForms = ({ existingArmy, onSubmit }: ArmyFormsProps) => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { isValid, errors },
   } = useForm<IArmy>({
     mode: "all",
     values: existingArmy,
   });
+
+  const equipmentFactorControl = toFieldProps(
+    useController({
+      name: "equipmentFactor",
+      control,
+      rules: { required: true },
+    })
+  );
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -70,12 +81,7 @@ export const ArmyForms = ({ existingArmy, onSubmit }: ArmyFormsProps) => {
             })}
           />
           <InputLabel>Quality of Equipment</InputLabel>
-          <Select
-            required
-            {...register("equipmentFactor", {
-              required: true,
-              valueAsNumber: true,
-            })}>
+          <Select required {...equipmentFactorControl}>
             <MenuItem value={5}>5</MenuItem>
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={15}>15</MenuItem>
