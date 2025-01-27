@@ -1,6 +1,14 @@
 package at.peter.warmachine.model;
 
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ArmyRepository extends CrudRepository<Army, Long> {
+import java.util.List;
+
+public interface ArmyRepository extends JpaRepository<Army, Long> {
+
+    @Transactional
+    public List<Army> findByOrderById();
+
 }

@@ -2,6 +2,8 @@ package at.peter.warmachine.api;
 
 import at.peter.warmachine.model.Army;
 import at.peter.warmachine.model.ArmyRepository;
+import at.peter.warmachine.model.Leader;
+import at.peter.warmachine.model.LeaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +24,12 @@ public class ArmyService {
     @Autowired
     private ArmyRepository armyRepo;
 
+    @Autowired
+    private LeaderRepository leaderRepo;
+
     @GetMapping
     public List<Army> getArmies() {
-        return StreamSupport.stream(armyRepo.findAll().spliterator(), false).toList();
+        return armyRepo.findByOrderById();
     }
 
     @GetMapping("/{armyId}")
@@ -36,8 +41,12 @@ public class ArmyService {
     public Army patchArmy(@PathVariable("armyId") Long armyId, @RequestBody Army army) throws ArmyMissingException {
         Army byId = armyRepo.findById(armyId).orElseThrow(() -> new ArmyMissingException(armyId));
 
+        Optional<Leader> leader =  Optional.empty();
+        if(army.getLeader() != null)
+            leader = leaderRepo.findById(army.getLeader().getId());
+
         Optional.ofNullable(army.getName()).ifPresent(byId::setName);
-        Optional.ofNullable(army.getLeader()).ifPresent(byId::setLeader);
+        leader.ifPresent(byId::setLeader);
         Optional.ofNullable(army.getExperienceFactor()).ifPresent(byId::setExperienceFactor);
         Optional.ofNullable(army.getTrainingFactor()).ifPresent(byId::setTrainingFactor);
         Optional.ofNullable(army.getEquipmentFactor()).ifPresent(byId::setEquipmentFactor);
@@ -55,6 +64,10 @@ public class ArmyService {
 
     @PutMapping
     public Army putArmy(@RequestBody Army army) {
+        Optional<Leader> leader =  Optional.empty();
+        if(army.getLeader() != null)
+            leader = leaderRepo.findById(army.getLeader().getId());
+        leader.ifPresent(army::setLeader);
         return armyRepo.save(army);
     }
 
