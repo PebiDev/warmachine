@@ -2,17 +2,7 @@ import { useMemo } from "react";
 import { IArmy, ILeader } from "../../types/dto";
 import { Button, TableCell, TableRow } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-
-const calculateLeaderFactor = (leader: ILeader) => {
-  if (!leader) return 0;
-  const result =
-    leader.intAdjustment +
-    leader.wisAdjustment +
-    leader.chaAdjustment +
-    leader.leaderLevel;
-
-  return Math.round(result);
-};
+import { calculateLeaderFactor } from "./calculateLeaderFactor";
 
 interface LeaderComponentProps {
   leader: ILeader;

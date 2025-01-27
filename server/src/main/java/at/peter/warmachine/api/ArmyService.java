@@ -37,6 +37,7 @@ public class ArmyService {
         Army byId = armyRepo.findById(armyId).orElseThrow(() -> new ArmyMissingException(armyId));
 
         Optional.ofNullable(army.getName()).ifPresent(byId::setName);
+        Optional.ofNullable(army.getLeader()).ifPresent(byId::setLeader);
         Optional.ofNullable(army.getExperienceFactor()).ifPresent(byId::setExperienceFactor);
         Optional.ofNullable(army.getTrainingFactor()).ifPresent(byId::setTrainingFactor);
         Optional.ofNullable(army.getEquipmentFactor()).ifPresent(byId::setEquipmentFactor);

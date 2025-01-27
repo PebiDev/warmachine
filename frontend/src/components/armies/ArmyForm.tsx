@@ -6,6 +6,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectProps,
   Stack,
   TextField,
 } from "@mui/material";
@@ -16,7 +17,10 @@ import {
   UseControllerReturn,
   useForm,
 } from "react-hook-form";
-import { IArmy } from "../../types/dto";
+import { IArmy, ILeader } from "../../types/dto";
+import { calculateLeaderFactor } from "../leaders/calculateLeaderFactor";
+import { useQuery } from "@tanstack/react-query";
+import { loadLeaders } from "../leaders/loadLeaders";
 
 const toFieldProps = <T extends FieldValues>({
   field: { value, onChange, onBlur, name, ref, disabled },
@@ -28,6 +32,25 @@ const toFieldProps = <T extends FieldValues>({
   inputRef: ref,
   disabled,
 });
+
+const LeaderSelect = (props: SelectProps) => {
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["leaders"],
+    queryFn: loadLeaders,
+  });
+  return (
+    <>
+      <InputLabel>Army Leader</InputLabel>
+      <Select {...props}>
+        {data?.map((leader) => (
+          <MenuItem key={leader.id} value={leader.id}>
+            {leader.name}({calculateLeaderFactor(leader)})
+          </MenuItem>
+        ))}
+      </Select>
+    </>
+  );
+};
 
 interface ArmyFormsProps {
   existingArmy?: IArmy;
@@ -53,6 +76,13 @@ export const ArmyForms = ({ existingArmy, onSubmit }: ArmyFormsProps) => {
     })
   );
 
+  const armyLeaderControl = toFieldProps(
+    useController({
+      name: "leader.id",
+      control,
+    })
+  );
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ "& > div": { m: 1, width: "25ch" }, display: "flex" }}>
@@ -62,6 +92,7 @@ export const ArmyForms = ({ existingArmy, onSubmit }: ArmyFormsProps) => {
             label="Army Name"
             {...register("name", { required: true })}
           />
+          <LeaderSelect {...armyLeaderControl}></LeaderSelect>
           <TextField
             required
             type="number"

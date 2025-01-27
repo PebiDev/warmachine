@@ -5,8 +5,6 @@ import {
   useMatchRoute,
   useNavigate,
 } from "@tanstack/react-router";
-import { ILeader } from "../types/dto";
-import ArmyComponent from "../components/armies/ArmyDisplay";
 import {
   Button,
   Modal,
@@ -19,13 +17,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { RouteOutletPaper } from "../components/armies/armies.styles";
-import LeaderComponent from "../components/leaders/leaderDisplay";
-
-const loadLeaders = async (): Promise<ILeader[]> => {
-  const response = await fetch("/api/leaders");
-  const leaders = await response.json();
-  return leaders;
-};
+import LeaderComponent from "../components/leaders/LeaderDisplay";
+import { loadLeaders } from "../components/leaders/loadLeaders";
 
 const LeaderList = () => {
   const { data, isError, isLoading } = useQuery({
