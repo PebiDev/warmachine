@@ -20,7 +20,7 @@ const calculateBasicForceFactor = (army: IArmy) => {
     army.experienceFactor +
     army.trainingFactor +
     army.equipmentFactor +
-    army.specialTroopFactor * 20;
+    army.specialTroopFactor * 2;
   return basicForceFactor;
 };
 
