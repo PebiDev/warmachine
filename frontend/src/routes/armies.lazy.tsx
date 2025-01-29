@@ -5,7 +5,6 @@ import {
   useMatchRoute,
   useNavigate,
 } from "@tanstack/react-router";
-import { IArmy } from "../types/dto";
 import ArmyComponent from "../components/armies/ArmyDisplay";
 import {
   Button,
@@ -19,12 +18,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { RouteOutletPaper } from "../components/armies/armies.styles";
-
-const loadArmies = async (): Promise<IArmy[]> => {
-  const response = await fetch("/api/armies");
-  const armies = await response.json();
-  return armies;
-};
+import { loadArmies } from "../components/armies/loadArmies";
 
 const ArmyList = () => {
   const { data, isError, isLoading } = useQuery({
